@@ -253,6 +253,14 @@ func (t *TraceJobClient) CreateJob(nj TraceJob) (*batchv1.Job, error) {
 								},
 							},
 						},
+						apiv1.Volume{
+							Name: "include",
+							VolumeSource: apiv1.VolumeSource{
+								HostPath: &apiv1.HostPathVolumeSource{
+									Path: "/usr/include",
+								},
+							},
+						},
 					},
 					Containers: []apiv1.Container{
 						apiv1.Container{
@@ -280,6 +288,11 @@ func (t *TraceJobClient) CreateJob(nj TraceJob) (*batchv1.Job, error) {
 								apiv1.VolumeMount{
 									Name:      "sys",
 									MountPath: "/sys",
+									ReadOnly:  true,
+								},
+								apiv1.VolumeMount{
+									Name:      "include",
+									MountPath: "/usr/include",
 									ReadOnly:  true,
 								},
 							},
